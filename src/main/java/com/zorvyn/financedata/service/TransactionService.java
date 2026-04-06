@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -98,13 +99,17 @@ public class TransactionService {
         throw new NoTransactionRecordFoundException("No transaction record found for the Id - "+id);
     }
 
-    public ResponseEntity<ResponseBody<?>> getAllTransactionRecords(int pageNumber, int pageSize){
+    public ResponseEntity<ResponseBody<?>> getAllTransactionRecords(int pageNumber, int pageSize,
+                                                                    Integer type,
+                                                                    Integer category){
+
 
         Sort sort = Sort.by("createdAt").descending();
 
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
 
-        Page<Transactions> transactions = transactionRepository.findAll(pageable);
+        Page<Transactions> transactions = transactionRepository.findAllByDateTypeOrCategory(pageable,
+               type,category);
 
         ResponseBody<Page<Transactions>> responseBody = new ResponseBody<>();
         responseBody.setStatus(HttpStatus.OK.getReasonPhrase());

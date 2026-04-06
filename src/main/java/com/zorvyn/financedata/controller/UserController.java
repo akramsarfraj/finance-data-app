@@ -50,10 +50,11 @@ public class UserController {
     public ResponseEntity<?> getAllUser(@RequestParam(defaultValue = "10") int pageSize,
                                         @RequestParam(defaultValue = "0") int pageNumber,
                                         @RequestParam(required = false) Boolean isDelete,
-                                        @RequestParam(required = false) Boolean isActive){
+                                        @RequestParam(required = false) Boolean isActive,
+                                        @RequestParam(required = false) String userName){
 
 
-        return userService.getAllUsers(pageSize,pageNumber,isDelete,isActive);
+        return userService.getAllUsers(pageSize,pageNumber,isDelete,isActive,userName);
     }
 
     @GetMapping("/user/{id}")

@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 public class TransactionsController {
 
@@ -40,9 +42,12 @@ public class TransactionsController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     public ResponseEntity<ResponseBody<?>> getAllRecords(
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber
-    ){
-        return transactionService.getAllTransactionRecords(pageNumber,pageSize);
+            @RequestParam(defaultValue = "0") int pageNumber,
+//            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) Integer type,
+            @RequestParam(required = false) Integer category
+            ){
+        return transactionService.getAllTransactionRecords(pageNumber,pageSize,type,category);
     }
 
     @GetMapping("/get-record")

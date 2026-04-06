@@ -93,13 +93,13 @@ public class UserService {
         throw new UserNotFoundException("No user detail found for the id : "+dto.getId());
     }
 
-    public ResponseEntity<ResponseBody<Page<User>>> getAllUsers(int pageSize, int pageNumber, Boolean isDeleted, Boolean isActive ){
+    public ResponseEntity<ResponseBody<Page<User>>> getAllUsers(int pageSize, int pageNumber, Boolean isDeleted, Boolean isActive, String userName){
 
         Sort sort = Sort.by("createdAt").descending();
 
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
 
-        Page<User> users = userRepository.findAllByActiveAndDeleteFilter(pageable,isDeleted,isActive);
+        Page<User> users = userRepository.findAllByActiveAndDeleteFilter(pageable,isDeleted,isActive,userName);
 
         ResponseBody<Page<User>> body = new ResponseBody<>();
         body.setMessage("all user list fetch.");

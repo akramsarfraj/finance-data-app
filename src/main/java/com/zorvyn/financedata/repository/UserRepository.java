@@ -14,11 +14,13 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
     @Query(" select u from User u " +
-            " where ( :isDelete is null or u.isDelete=:isDelete ) " +
-            " or ( :isActive is null  or u.isActive=:isActive) ")
+            " where (:search is null or u.userName like %:search% )" +
+            " and ( :isDelete is null or u.isDelete=:isDelete ) " +
+            " and ( :isActive is null  or u.isActive=:isActive) ")
     Page<User> findAllByActiveAndDeleteFilter(Pageable pageable,
                                              @Param("isDelete") Boolean isDelete,
-                                              @Param("isActive")  Boolean isActive);
+                                              @Param("isActive")  Boolean isActive,
+                                              @Param("search") String search );
 
 
 

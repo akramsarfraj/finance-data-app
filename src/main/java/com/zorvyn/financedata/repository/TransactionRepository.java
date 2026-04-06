@@ -3,13 +3,26 @@ package com.zorvyn.financedata.repository;
 import com.zorvyn.financedata.dto.DashboardProjection;
 import com.zorvyn.financedata.dto.TrendDataProjection;
 import com.zorvyn.financedata.model.Transactions;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transactions,Long> {
+
+
+    @Query(value = "select t from  Transactions t  " +
+            " where ( :category is null or t.category=:category ) " +
+//            " and (:date is null or t.date=:date ) " +
+            " and ( :type is null or t.type=:type ) "
+    )
+    Page<Transactions> findAllByDateTypeOrCategory(Pageable pageable,
+                                                   @Param("type") Integer type,
+                                                   @Param("category")  Integer category);
 
     @Query("select t from  Transactions t order by t.createdAt desc limit 5 ")
     List<Transactions> getRecentFiveTransactionRecord();
