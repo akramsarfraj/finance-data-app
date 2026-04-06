@@ -87,7 +87,7 @@ POST /login
   "password": "password"
 }
 ```
-
+ it generate the token (60 minutes valid) needed to call other api 
 ---
 
 ## User Roles
