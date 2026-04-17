@@ -195,4 +195,3 @@ Accessible by:
 * Dashboard & Analytics APIs
 * Pagination & Filtering
 
-⭐ If you like this project, consider giving it a star!
